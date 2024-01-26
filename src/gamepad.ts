@@ -68,9 +68,21 @@ const gamepad = {
             for (let x = 0; x < this.axes; x++) {
               const jIndex = Math.floor(x / 2);
               const modifier = x % 2 === 0 ? 'horizontal' : 'vertical';
+              // Zero the axis within the deadzone
+	      if (Math.abs(gp.axes[x]) <= this.axeStep) {
+                gp.axes[x] = 0;
+              }
+	      // If the old value is out of the dead zone, trigger repeat if the timer ticked
+	      // or if the new value is in the dead zone
+	      // Else if the old value is in the dead zone, trigger repeat if the timer ticked
+	      // and the new value is out of the dead zone
+	      // These constraints will avoid spamming repeat in the dead zone and flicks from the
+	      // center of the joystick outwards
               if (Math.abs(this.axeValues[x]) > this.axeStep) {
                 if (gp.axes[x] === 0 || repeat) this.axesActions[jIndex][modifier].repeat.trigger(gp.axes[x]);
-              }
+              } else if (repeat && (Math.abs(gp.axes[x]) > this.axeStep)) {
+                this.axesActions[jIndex][modifier].repeat.trigger(gp.axes[x]);
+	      }
               if (Math.abs(this.axeValues[x] - gp.axes[x]) < this.axeStep) {
                 // In that case we do nothing, the value has not changed or, under the thresholt.
                 // We do not want to spam the consumer with callback

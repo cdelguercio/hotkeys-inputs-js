@@ -51,7 +51,17 @@ const gamepad = {
           gp = gps[this.id] as Gamepad;
           if (gp.buttons) {
             for (let x = 0; x < this.buttons; x++) {
-              if (repeat) this.buttonActions[x].repeat.trigger(gp.buttons[x].pressed ? 1 : 0);
+              if (repeat) {
+                // If the button is pressed, trigger repeat unless it is an analog button that
+                // has been released for more than one tick
+                if (gp.buttons[x].value === undefined) {
+                  // tslint:disable-next-line:no-console
+                  console.log('gp.buttons[x].value is undefined', gp.buttons[x]);
+                  this.buttonActions[x].repeat.trigger(gp.buttons[x].pressed ? 1 : 0);
+                } else if(this.pressed[`button${x}`] || gp.buttons[x].pressed) {
+                  this.buttonActions[x].repeat.trigger(gp.buttons[x].value);
+                }
+              }
               if (gp.buttons[x].pressed === true) {
                 if (!this.pressed[`button${x}`]) {
                   this.pressed[`button${x}`] = true;

@@ -64,7 +64,7 @@ const b = {
         if (n.length) {
           if (t = n[this.id], t.buttons)
             for (let s = 0; s < this.buttons; s++)
-              a && (t.buttons[s].value === void 0 ? (console.log("gp.buttons[x].value is undefined", t.buttons[s]), this.buttonActions[s].repeat.trigger(t.buttons[s].pressed ? 1 : 0)) : (this.pressed[`button${s}`] || t.buttons[s].pressed) && this.buttonActions[s].repeat.trigger(t.buttons[s].value)), t.buttons[s].pressed === !0 ? (this.pressed[`button${s}`] || (this.pressed[`button${s}`] = !0, this.buttonActions[s].pressed.trigger(1)), this.buttonActions[s].changed.trigger(1)) : this.pressed[`button${s}`] && (delete this.pressed[`button${s}`], this.buttonActions[s].released.trigger(0));
+              a && (t.buttons[s].value === void 0 ? (console.log("gp.buttons[x].value is undefined", t.buttons[s]), this.buttonActions[s].repeat.trigger(t.buttons[s].pressed ? 1 : 0)) : (this.pressed[`button${s}`] || t.buttons[s].pressed) && this.buttonActions[s].repeat.trigger(t.buttons[s].value)), t.buttons[s].pressed ? (this.pressed[`button${s}`] || (this.pressed[`button${s}`] = !0, this.buttonActions[s].pressed.trigger(1)), this.buttonActions[s].changed.trigger(1)) : this.pressed[`button${s}`] && (delete this.pressed[`button${s}`], this.buttonActions[s].released.trigger(0), this.buttonActions[s].repeat.trigger(0));
           if (t.axes)
             for (let s = 0; s < this.axes; s++) {
               const r = Math.floor(s / 2), h = s % 2 === 0 ? "horizontal" : "vertical";

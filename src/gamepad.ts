@@ -62,7 +62,7 @@ const gamepad = {
                   this.buttonActions[x].repeat.trigger(gp.buttons[x].value);
                 }
               }
-              if (gp.buttons[x].pressed === true) {
+              if (gp.buttons[x].pressed) {
                 if (!this.pressed[`button${x}`]) {
                   this.pressed[`button${x}`] = true;
                   this.buttonActions[x].pressed.trigger(1);
@@ -71,6 +71,7 @@ const gamepad = {
               } else if (this.pressed[`button${x}`]) {
                 delete this.pressed[`button${x}`];
                 this.buttonActions[x].released.trigger(0);
+                this.buttonActions[x].repeat.trigger(0);
               }
             }
           }

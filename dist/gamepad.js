@@ -1,1 +1,1 @@
-"use strict";const e=require("./gamepad-4094ab21.js");module.exports=e.gamepad;
+"use strict";const e=require("./gamepad-06fe0cf6.js");module.exports=e.gamepad;

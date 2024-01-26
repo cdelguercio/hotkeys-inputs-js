@@ -1,14 +1,14 @@
 {
-  "_gamepad-066b1375.mjs": {
-    "file": "gamepad-066b1375.mjs"
+  "_gamepad-06fe0cf6.js": {
+    "file": "gamepad-06fe0cf6.js"
   },
-  "_gamepad-4094ab21.js": {
-    "file": "gamepad-4094ab21.js"
+  "_gamepad-2fefe094.mjs": {
+    "file": "gamepad-2fefe094.mjs"
   },
   "src/gamecontrol.ts": {
     "file": "gamecontrol.js",
     "imports": [
-      "_gamepad-4094ab21.js"
+      "_gamepad-06fe0cf6.js"
     ],
     "isEntry": true,
     "src": "src/gamecontrol.ts"
@@ -16,7 +16,7 @@
   "src/gamepad.ts": {
     "file": "gamepad.js",
     "imports": [
-      "_gamepad-4094ab21.js"
+      "_gamepad-06fe0cf6.js"
     ],
     "isEntry": true,
     "src": "src/gamepad.ts"
@@ -25,7 +25,7 @@
     "file": "inputActions.js",
     "imports": [
       "src/gamecontrol.ts",
-      "_gamepad-4094ab21.js"
+      "_gamepad-06fe0cf6.js"
     ],
     "isEntry": true,
     "src": "src/inputActions.ts"

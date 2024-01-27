@@ -1,4 +1,4 @@
-import { g as f } from "./gamepad-10e75857.mjs";
+import { g as f } from "./gamepad-fa1181dc.mjs";
 export {
   f as default
 };

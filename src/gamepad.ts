@@ -51,6 +51,8 @@ const gamepad = {
           gp = gps[this.id] as Gamepad;
           if (gp.buttons) {
             for (let x = 0; x < this.buttons; x++) {
+              // tslint:disable-next-line:no-console
+              console.log(gp.buttons[x]);
               if (repeat) {
                 // If the button is pressed, trigger repeat unless it is an analog button that
                 // has been released for more than one tick

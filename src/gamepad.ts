@@ -52,15 +52,7 @@ const gamepad = {
           if (gp.buttons) {
             for (let x = 0; x < this.buttons; x++) {
               if (repeat) {
-                // If the button is pressed, trigger repeat unless it is an analog button that
-                // has been released for more than one tick
-                // if (gp.buttons[x].value === undefined) {
-                //   // tslint:disable-next-line:no-console
-                //   console.log('gp.buttons[x].value is undefined', gp.buttons[x]);
-                //   this.buttonActions[x].repeat.trigger(gp.buttons[x].pressed ? 1 : 0);
-                // } else if(this.pressed[`button${x}`] || gp.buttons[x].pressed) {
-                //   this.buttonActions[x].repeat.trigger(gp.buttons[x].value);
-                // }
+                // If the value is greater than zero, trigger repeat
                 if (gp.buttons[x].value && gp.buttons[x].value > 0) {
                   this.buttonActions[x].repeat.trigger(gp.buttons[x].value);
                 }

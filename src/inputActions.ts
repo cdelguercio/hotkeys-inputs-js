@@ -89,7 +89,7 @@ const inputActions: InputActions = {
         const onInputEvent = (value: number | undefined) => {
           if (!this.handlers[action.type].enabled) return;
           if (!value) {
-            v();
+            v(0);
             return;
           }
           const adjustedValue =

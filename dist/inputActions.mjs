@@ -1,5 +1,5 @@
 import k from "./gamecontrol.mjs";
-import "./gamepad-87474895.mjs";
+import "./gamepad-e1b4809b.mjs";
 var C = typeof navigator < "u" ? navigator.userAgent.toLowerCase().indexOf("firefox") > 0 : !1;
 function x(e, t, r, n) {
   e.addEventListener ? e.addEventListener(t, r, n) : e.attachEvent && e.attachEvent("on".concat(t), function() {
@@ -376,7 +376,7 @@ const te = {
           if (!this.handlers[s.type].enabled)
             return;
           if (!h) {
-            a();
+            a(0);
             return;
           }
           const v = h === 1 ? ((_ = s.options) == null ? void 0 : _.value) ?? 1 : h === 0 ? 0 : (((L = s.options) == null ? void 0 : L.value) ?? 1) * h;

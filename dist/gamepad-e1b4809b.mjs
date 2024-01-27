@@ -15,7 +15,6 @@ class c {
     this.handlers = [];
   }
   async trigger(e) {
-    console.log("triggering event", e);
     const t = this.handlers.slice(0).map(async (a) => a(e));
     await Promise.all(t);
   }
@@ -31,7 +30,7 @@ const p = {
   pressed: new c(),
   released: new c(),
   repeat: new c()
-}), g = {
+}), x = {
   init: function(i) {
     const e = {
       id: i.index,
@@ -103,5 +102,5 @@ const p = {
 };
 export {
   c as L,
-  g
+  x as g
 };

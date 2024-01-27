@@ -23,8 +23,6 @@ export class LiteEvent<T> implements ILiteEvent<T> {
   }
 
   public async trigger(data: T) {
-    // tslint:disable-next-line:no-console
-    console.log('triggering event', data);
     const handlers = this.handlers.slice(0).map(async (h) => h(data));
     await Promise.all(handlers);
   }

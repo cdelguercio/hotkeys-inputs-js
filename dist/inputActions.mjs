@@ -1,7 +1,7 @@
 import k from "./gamecontrol.mjs";
-import "./gamepad-e1b4809b.mjs";
+import "./gamepad-87474895.mjs";
 var C = typeof navigator < "u" ? navigator.userAgent.toLowerCase().indexOf("firefox") > 0 : !1;
-function j(e, t, r, n) {
+function x(e, t, r, n) {
   e.addEventListener ? e.addEventListener(t, r, n) : e.attachEvent && e.attachEvent("on".concat(t), function() {
     r(window.event);
   });
@@ -17,7 +17,7 @@ function I(e) {
     t[r - 1] += ",", t.splice(r, 1), r = t.lastIndexOf("");
   return t;
 }
-function G(e, t) {
+function R(e, t) {
   for (var r = e.length >= t.length ? e : t, n = e.length >= t.length ? t : e, i = !0, a = 0; a < r.length; a++)
     n.indexOf(r[a]) === -1 && (i = !1);
   return i;
@@ -74,7 +74,7 @@ var K = {
   "[": 219,
   "]": 221,
   "\\": 220
-}, v = {
+}, b = {
   // shiftKey
   "⇧": 16,
   shift: 16,
@@ -107,18 +107,18 @@ var K = {
 }, d = {};
 for (var A = 1; A < 20; A++)
   K["f".concat(A)] = 111 + A;
-var o = [], H = !1, T = "all", V = [], E = function(t) {
-  return K[t.toLowerCase()] || v[t.toLowerCase()] || t.toUpperCase().charCodeAt(0);
-}, R = function(t) {
+var o = [], H = !1, T = "all", $ = [], E = function(t) {
+  return K[t.toLowerCase()] || b[t.toLowerCase()] || t.toUpperCase().charCodeAt(0);
+}, V = function(t) {
   return Object.keys(K).find(function(r) {
     return K[r] === t;
   });
 }, F = function(t) {
-  return Object.keys(v).find(function(r) {
-    return v[r] === t;
+  return Object.keys(b).find(function(r) {
+    return b[r] === t;
   });
 };
-function $(e) {
+function G(e) {
   T = e || "all";
 }
 function O() {
@@ -129,7 +129,7 @@ function X() {
 }
 function q() {
   return o.map(function(e) {
-    return R(e) || F(e) || String.fromCharCode(e);
+    return V(e) || F(e) || String.fromCharCode(e);
   });
 }
 function z(e) {
@@ -146,14 +146,14 @@ function Q(e, t) {
     if (Object.prototype.hasOwnProperty.call(d, i))
       for (r = d[i], n = 0; n < r.length; )
         r[n].scope === e ? r.splice(n, 1) : n++;
-  O() === e && $(t || "all");
+  O() === e && G(t || "all");
 }
 function W(e) {
   var t = e.keyCode || e.which || e.charCode, r = o.indexOf(t);
   if (r >= 0 && o.splice(r, 1), e.key && e.key.toLowerCase() === "meta" && o.splice(0, o.length), (t === 93 || t === 224) && (t = 91), t in l) {
     l[t] = !1;
-    for (var n in v)
-      v[n] === t && (y[n] = !1);
+    for (var n in b)
+      b[n] === t && (y[n] = !1);
   }
 }
 function Y(e) {
@@ -163,15 +163,15 @@ function Y(e) {
     });
   else if (Array.isArray(e))
     e.forEach(function(f) {
-      f.key && x(f);
+      f.key && j(f);
     });
   else if (typeof e == "object")
-    e.key && x(e);
+    e.key && j(e);
   else if (typeof e == "string") {
     for (var t = arguments.length, r = new Array(t > 1 ? t - 1 : 0), n = 1; n < t; n++)
       r[n - 1] = arguments[n];
     var i = r[0], a = r[1];
-    typeof i == "function" && (a = i, i = ""), x({
+    typeof i == "function" && (a = i, i = ""), j({
       key: e,
       scope: i,
       method: a,
@@ -179,16 +179,16 @@ function Y(e) {
     });
   }
 }
-var x = function(t) {
+var j = function(t) {
   var r = t.key, n = t.scope, i = t.method, a = t.splitKey, f = a === void 0 ? "+" : a, s = I(r);
   s.forEach(function(u) {
     var p = u.split(f), m = p.length, g = p[m - 1], c = g === "*" ? "*" : E(g);
     if (d[c]) {
       n || (n = O());
-      var w = m > 1 ? D(v, p) : [];
+      var w = m > 1 ? D(b, p) : [];
       d[c] = d[c].filter(function(h) {
-        var b = i ? h.method === i : !0;
-        return !(b && h.scope === n && G(h.mods, w));
+        var v = i ? h.method === i : !0;
+        return !(v && h.scope === n && R(h.mods, w));
       });
     }
   });
@@ -208,12 +208,12 @@ function B(e, t) {
   var r = d["*"], n = e.keyCode || e.which || e.charCode;
   if (y.filter.call(this, e)) {
     if ((n === 93 || n === 224) && (n = 91), o.indexOf(n) === -1 && n !== 229 && o.push(n), ["ctrlKey", "altKey", "shiftKey", "metaKey"].forEach(function(h) {
-      var b = S[h];
-      e[h] && o.indexOf(b) === -1 ? o.push(b) : !e[h] && o.indexOf(b) > -1 ? o.splice(o.indexOf(b), 1) : h === "metaKey" && e[h] && o.length === 3 && (e.ctrlKey || e.shiftKey || e.altKey || (o = o.slice(o.indexOf(b))));
+      var v = S[h];
+      e[h] && o.indexOf(v) === -1 ? o.push(v) : !e[h] && o.indexOf(v) > -1 ? o.splice(o.indexOf(v), 1) : h === "metaKey" && e[h] && o.length === 3 && (e.ctrlKey || e.shiftKey || e.altKey || (o = o.slice(o.indexOf(v))));
     }), n in l) {
       l[n] = !0;
-      for (var i in v)
-        v[i] === n && (y[i] = !0);
+      for (var i in b)
+        b[i] === n && (y[i] = !0);
       if (!r)
         return;
     }
@@ -235,13 +235,13 @@ function B(e, t) {
   }
 }
 function Z(e) {
-  return V.indexOf(e) > -1;
+  return $.indexOf(e) > -1;
 }
 function y(e, t, r) {
   o = [];
   var n = I(e), i = [], a = "all", f = document, s = 0, u = !1, p = !0, m = "+", g = !1;
   for (r === void 0 && typeof t == "function" && (r = t), Object.prototype.toString.call(t) === "[object Object]" && (t.scope && (a = t.scope), t.element && (f = t.element), t.keyup && (u = t.keyup), t.keydown !== void 0 && (p = t.keydown), t.capture !== void 0 && (g = t.capture), typeof t.splitKey == "string" && (m = t.splitKey)), typeof t == "string" && (a = t); s < n.length; s++)
-    e = n[s].split(m), i = [], e.length > 1 && (i = D(v, e)), e = e[e.length - 1], e = e === "*" ? "*" : E(e), e in d || (d[e] = []), d[e].push({
+    e = n[s].split(m), i = [], e.length > 1 && (i = D(b, e)), e = e[e.length - 1], e = e === "*" ? "*" : E(e), e in d || (d[e] = []), d[e].push({
       keyup: u,
       keydown: p,
       scope: a,
@@ -252,11 +252,11 @@ function y(e, t, r) {
       splitKey: m,
       element: f
     });
-  typeof f < "u" && !Z(f) && window && (V.push(f), j(f, "keydown", function(c) {
+  typeof f < "u" && !Z(f) && window && ($.push(f), x(f, "keydown", function(c) {
     B(c, f);
-  }, g), H || (H = !0, j(window, "focus", function() {
+  }, g), H || (H = !0, x(window, "focus", function() {
     o = [];
-  }, g)), j(f, "keyup", function(c) {
+  }, g)), x(f, "keyup", function(c) {
     B(c, f), W(c);
   }, g));
 }
@@ -273,7 +273,7 @@ function N(e) {
 }
 var P = {
   getPressedKeyString: q,
-  setScope: $,
+  setScope: G,
   getScope: O,
   deleteScope: Q,
   getPressedKeyCodes: X,
@@ -282,7 +282,7 @@ var P = {
   trigger: N,
   unbind: Y,
   keyMap: K,
-  modifier: v,
+  modifier: b,
   modifierMap: S
 };
 for (var M in P)
@@ -376,11 +376,11 @@ const te = {
           if (!this.handlers[s.type].enabled)
             return;
           if (!h) {
-            console.log("No value for action", s), a();
+            a();
             return;
           }
-          const b = h === 1 ? ((_ = s.options) == null ? void 0 : _.value) ?? 1 : h === 0 ? 0 : (((L = s.options) == null ? void 0 : L.value) ?? 1) * h;
-          console.log("adjustedValue", b), a(b);
+          const v = h === 1 ? ((_ = s.options) == null ? void 0 : _.value) ?? 1 : h === 0 ? 0 : (((L = s.options) == null ? void 0 : L.value) ?? 1) * h;
+          a(v);
         };
         this.registeredActions[s.type][s.key] = {
           handler: p,

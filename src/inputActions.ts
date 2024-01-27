@@ -89,15 +89,11 @@ const inputActions: InputActions = {
         const onInputEvent = (value: number | undefined) => {
           if (!this.handlers[action.type].enabled) return;
           if (!value) {
-            // tslint:disable-next-line:no-console
-            console.log('No value for action', action);
             v();
             return;
           }
           const adjustedValue =
             value === 1 ? action.options?.value ?? 1 : value === 0 ? 0 : (action.options?.value ?? 1) * value;
-          // tslint:disable-next-line:no-console
-          console.log('adjustedValue', adjustedValue);
           v(adjustedValue);
         };
         this.registeredActions[action.type][action.key] = {

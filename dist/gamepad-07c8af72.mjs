@@ -78,7 +78,7 @@ const p = {
           const s = Math.floor((Math.abs(t) - 1) / 2), r = (Math.abs(t) - 1) % 2 === 0 ? "horizontal" : "vertical";
           this.axesActions[s][r][n].on(a);
         } else
-          console.log("Button Action eventType: ", n), this.buttonActions[t][n].on(a);
+          this.buttonActions[t][n].on(a);
         return this;
       },
       off: function(t) {

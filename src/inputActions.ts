@@ -96,6 +96,8 @@ const inputActions: InputActions = {
           }
           const adjustedValue =
             value === 1 ? action.options?.value ?? 1 : value === 0 ? 0 : (action.options?.value ?? 1) * value;
+          // tslint:disable-next-line:no-console
+          console.log('adjustedValue', adjustedValue);
           v(adjustedValue);
         };
         this.registeredActions[action.type][action.key] = {

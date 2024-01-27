@@ -128,6 +128,8 @@ const gamepad = {
           this.axesActions[jIndex][orientation][eventType].on(callback);
         } else {
           // If a button
+          // tslint:disable-next-line:no-console
+          console.log("Button Action eventType: ", eventType);
           this.buttonActions[eventName as number][eventType].on(callback);
         }
         return this;

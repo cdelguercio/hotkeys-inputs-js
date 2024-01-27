@@ -19,7 +19,7 @@ class c {
     await Promise.all(t);
   }
 }
-const b = {
+const A = {
   lastUpdate: Date.now(),
   tick: function(i = 10) {
     var e = Date.now(), t = e - this.lastUpdate;
@@ -60,7 +60,7 @@ const b = {
       },
       checkStatus: function() {
         let t = {};
-        const a = b.tick(), n = navigator.getGamepads ? navigator.getGamepads() : navigator.webkitGetGamepads ? navigator.webkitGetGamepads() : [];
+        const a = A.tick(), n = navigator.getGamepads ? navigator.getGamepads() : navigator.webkitGetGamepads ? navigator.webkitGetGamepads() : [];
         if (n.length) {
           if (t = n[this.id], t.buttons)
             for (let s = 0; s < this.buttons; s++)
@@ -78,7 +78,7 @@ const b = {
           const s = Math.floor((Math.abs(t) - 1) / 2), r = (Math.abs(t) - 1) % 2 === 0 ? "horizontal" : "vertical";
           this.axesActions[s][r][n].on(a);
         } else
-          this.buttonActions[t][n].on(a);
+          console.log("Button Action eventType: ", n), this.buttonActions[t][n].on(a);
         return this;
       },
       off: function(t) {

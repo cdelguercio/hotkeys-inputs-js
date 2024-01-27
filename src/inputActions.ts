@@ -75,7 +75,7 @@ const inputActions: InputActions = {
       const registeredInputTrigger = this.definedActions[k];
 
       registeredInputTrigger?.forEach((action) => {
-        // If already defined, saving id, unsubcribe the event and registering the new one
+        // If already defined, saving id, unsubscribe the event and registering the new one
         const previouslyRegistered = this.registeredActions[action.type][action.key];
         if (previouslyRegistered) {
           if (previouslyRegistered.id === id)

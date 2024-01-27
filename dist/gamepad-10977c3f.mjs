@@ -1,6 +1,6 @@
 var f = Object.defineProperty;
-var p = (i, e, t) => e in i ? f(i, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : i[e] = t;
-var u = (i, e, t) => (p(i, typeof e != "symbol" ? e + "" : e, t), t);
+var A = (i, e, t) => e in i ? f(i, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : i[e] = t;
+var u = (i, e, t) => (A(i, typeof e != "symbol" ? e + "" : e, t), t);
 class c {
   constructor() {
     u(this, "handlers", []);
@@ -19,7 +19,7 @@ class c {
     await Promise.all(t);
   }
 }
-const A = {
+const p = {
   lastUpdate: Date.now(),
   tick: function(i = 10) {
     var e = Date.now(), t = e - this.lastUpdate;
@@ -30,7 +30,7 @@ const A = {
   pressed: new c(),
   released: new c(),
   repeat: new c()
-}), d = {
+}), x = {
   init: function(i) {
     let e = {
       id: i.index,
@@ -60,11 +60,11 @@ const A = {
       },
       checkStatus: function() {
         let t = {};
-        const a = A.tick(), n = navigator.getGamepads ? navigator.getGamepads() : navigator.webkitGetGamepads ? navigator.webkitGetGamepads() : [];
+        const a = p.tick(), n = navigator.getGamepads ? navigator.getGamepads() : navigator.webkitGetGamepads ? navigator.webkitGetGamepads() : [];
         if (n.length) {
           if (t = n[this.id], t.buttons)
             for (let s = 0; s < this.buttons; s++)
-              a && (t.buttons[s].value === void 0 ? (console.log("gp.buttons[x].value is undefined", t.buttons[s]), this.buttonActions[s].repeat.trigger(t.buttons[s].pressed ? 1 : 0)) : (this.pressed[`button${s}`] || t.buttons[s].pressed) && this.buttonActions[s].repeat.trigger(t.buttons[s].value)), t.buttons[s].pressed ? (this.pressed[`button${s}`] || (this.pressed[`button${s}`] = !0, this.buttonActions[s].pressed.trigger(1)), this.buttonActions[s].changed.trigger(1)) : this.pressed[`button${s}`] && (console.log("Released"), delete this.pressed[`button${s}`], this.buttonActions[s].released.trigger(0), this.buttonActions[s].repeat.trigger(0));
+              a && t.buttons[s].value && t.buttons[s].value > 0 && this.buttonActions[s].repeat.trigger(t.buttons[s].value), t.buttons[s].pressed ? this.pressed[`button${s}`] || (this.pressed[`button${s}`] = !0, this.buttonActions[s].pressed.trigger(1), this.buttonActions[s].changed.trigger(1)) : this.pressed[`button${s}`] && (t.buttons[s].pressed || this.buttonActions[s].changed.trigger(0), delete this.pressed[`button${s}`], this.buttonActions[s].released.trigger(0), this.buttonActions[s].repeat.trigger(0));
           if (t.axes)
             for (let s = 0; s < this.axes; s++) {
               const r = Math.floor(s / 2), h = s % 2 === 0 ? "horizontal" : "vertical";
@@ -102,5 +102,5 @@ const A = {
 };
 export {
   c as L,
-  d as g
+  x as g
 };

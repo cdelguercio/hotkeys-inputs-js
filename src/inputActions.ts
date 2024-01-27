@@ -60,7 +60,7 @@ const inputActions: InputActions = {
   defineInputActions: function (actions: InputHandlerDefinedAction, opts?: RegisterInputActionOptions) {
     Object.entries(actions).map(([action, definitions]) => {
       if (!opts?.override && this.definedActions[action])
-        throw new Error(`${action} action has already been defined as a dependancy.`);
+        throw new Error(`${action} action has already been defined as a dependency.`);
       this.definedActions[action] = definitions;
     });
   },

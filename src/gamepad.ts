@@ -11,7 +11,7 @@ const makeEmptyEvents = <T>() => ({
 
 const gamepad = {
   init: function (gpad: Gamepad) {
-    let gamepadPrototype: GamepadPrototype = {
+    const gamepadPrototype: GamepadPrototype = {
       id: gpad.index,
       buttons: gpad.buttons.length,
       axes: Math.floor(gpad.axes.length / 2),
@@ -53,7 +53,7 @@ const gamepad = {
             for (let x = 0; x < this.buttons; x++) {
               if (repeat) {
                 // If the value is greater than zero, trigger repeat
-                if (gp.buttons[x].value && gp.buttons[x].value > 0) {
+                if (gp.buttons[x].value !== undefined && gp.buttons[x].value > 0) {
                   this.buttonActions[x].repeat.trigger(gp.buttons[x].value);
                 }
               }
@@ -77,7 +77,7 @@ const gamepad = {
             for (let x = 0; x < this.axes; x++) {
               const jIndex = Math.floor(x / 2);
               const modifier = x % 2 === 0 ? 'horizontal' : 'vertical';
-              let newAxisValue = gp.axes[x];
+              let newAxisValue = gp.axes[x] ?? 0;
               // Zero the axis within the dead zone
 	            if (Math.abs(gp.axes[x]) <= this.axeStep) {
                 newAxisValue = 0;

@@ -120,7 +120,7 @@ const inputActions: InputActions = {
     });
 
     // Call the unsubscribe callback for unsubcribed actions
-    for (var item of Array.from(idsPendingDeletion.values())) {
+    for (const item of Array.from(idsPendingDeletion.values())) {
       if (this.unregisterActionsCallbacks[item]) this.unregisterActionsCallbacks[item]();
     }
   },

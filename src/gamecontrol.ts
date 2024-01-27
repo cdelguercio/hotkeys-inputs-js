@@ -22,7 +22,7 @@ const gameControl: GameControl = {
     }
     return null;
   },
-  checkStatus: function () {
+  checkStatus: () => {
     const requestAnimationFrame = window.requestAnimationFrame || (window as any).webkitRequestAnimationFrame;
     const gamepadIds = Object.keys(gameControl.gamepads) as unknown as number[];
 
@@ -76,6 +76,7 @@ const gameControl: GameControl = {
         this.onAfterCycle.on(callback as () => void);
         break;
       default:
+        // tslint:disable-next-line:no-console
         console.error('gamepad: unknown custom event');
         break;
     }
@@ -96,6 +97,7 @@ const gameControl: GameControl = {
         this.onAfterCycle.off(callback as () => void);
         break;
       default:
+        // tslint:disable-next-line:no-console
         console.error('gamepad: unknown event');
         break;
     }

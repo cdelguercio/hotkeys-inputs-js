@@ -1,4 +1,4 @@
-import { L as o, g as i } from "./gamepad-07c8af72.mjs";
+import { L as o, g as i } from "./gamepad-e1b4809b.mjs";
 const a = {
   gamepads: {},
   axeThreshold: [1],
@@ -13,7 +13,7 @@ const a = {
   getGamepad: function(n) {
     return this.gamepads[n] ? this.gamepads[n] : null;
   },
-  checkStatus: function() {
+  checkStatus: () => {
     const n = window.requestAnimationFrame || window.webkitRequestAnimationFrame, e = Object.keys(a.gamepads);
     a.onBeforeCycle.trigger();
     for (let t = 0; t < e.length; t++)

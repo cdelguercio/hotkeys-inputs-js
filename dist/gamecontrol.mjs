@@ -1,4 +1,4 @@
-import { L as o, g as i } from "./gamepad-8e8bd4da.mjs";
+import { L as o, g as i } from "./gamepad-0ef47351.mjs";
 const a = {
   gamepads: {},
   axeThreshold: [1],

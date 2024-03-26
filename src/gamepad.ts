@@ -74,8 +74,6 @@ const gamepad = {
             }
           }
           if (gp.axes) {
-            // tslint:disable-next-line:no-console
-            console.log('gp.axes', gp.axes);
             for (let x = 0; x < this.axes; x++) {
               const jIndex = Math.floor(x / 2);
               const modifier = x % 2 === 0 ? 'horizontal' : 'vertical';

@@ -1,6 +1,6 @@
 var f = Object.defineProperty;
-var p = (i, e, t) => e in i ? f(i, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : i[e] = t;
-var u = (i, e, t) => (p(i, typeof e != "symbol" ? e + "" : e, t), t);
+var A = (i, e, t) => e in i ? f(i, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : i[e] = t;
+var u = (i, e, t) => (A(i, typeof e != "symbol" ? e + "" : e, t), t);
 class c {
   constructor() {
     u(this, "handlers", []);
@@ -19,7 +19,7 @@ class c {
     await Promise.all(t);
   }
 }
-const A = {
+const p = {
   lastUpdate: Date.now(),
   tick: function(i = 10) {
     var e = Date.now(), t = e - this.lastUpdate;
@@ -60,19 +60,17 @@ const A = {
       },
       checkStatus: function() {
         let t = {};
-        const a = A.tick(), n = navigator.getGamepads ? navigator.getGamepads() : navigator.webkitGetGamepads ? navigator.webkitGetGamepads() : [];
+        const a = p.tick(), n = navigator.getGamepads ? navigator.getGamepads() : navigator.webkitGetGamepads ? navigator.webkitGetGamepads() : [];
         if (n.length) {
           if (t = n[this.id], t.buttons)
             for (let s = 0; s < this.buttons; s++)
               a && t.buttons[s].value !== void 0 && t.buttons[s].value > 0 && this.buttonActions[s].repeat.trigger(t.buttons[s].value), t.buttons[s].pressed ? this.pressed[`button${s}`] || (this.pressed[`button${s}`] = !0, this.buttonActions[s].pressed.trigger(1), this.buttonActions[s].changed.trigger(1)) : this.pressed[`button${s}`] && (t.buttons[s].pressed || this.buttonActions[s].changed.trigger(0), delete this.pressed[`button${s}`], this.buttonActions[s].released.trigger(0), this.buttonActions[s].repeat.trigger(0));
-          if (t.axes) {
-            console.log("gp.axes", t.axes);
+          if (t.axes)
             for (let s = 0; s < this.axes; s++) {
               const r = Math.floor(s / 2), h = s % 2 === 0 ? "horizontal" : "vertical";
               let o = t.axes[s] ?? 0;
               Math.abs(t.axes[s]) <= this.axeStep && (o = 0), Math.abs(this.axeValues[s]) > this.axeStep ? (o === 0 || a) && this.axesActions[r][h].repeat.trigger(o) : a && Math.abs(o) > this.axeStep && this.axesActions[r][h].repeat.trigger(o), o === 0 && this.axeValues[s] !== 0 ? (this.axesActions[r][h].changed.trigger(o), this.axesActions[r][h].released.trigger(o), this.axeValues[s] = o) : Math.abs(this.axeValues[s] - o) < this.axeStep || (this.axeValues[s] === 0 ? (this.axesActions[r][h].changed.trigger(o), this.axesActions[r][h].pressed.trigger(o), this.axeValues[s] = o) : (this.axesActions[r][h].changed.trigger(o), this.axeValues[s] = o)), o === 0 && (this.axeValues[s] = 0);
             }
-          }
         }
       },
       on: function(t, a, n = "changed") {

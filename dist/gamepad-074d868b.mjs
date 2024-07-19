@@ -65,7 +65,7 @@ const p = {
         if (n.length) {
           if (t = n[this.id], t.buttons)
             for (let s = 0; s < this.buttons; s++) {
-              if (a && t.buttons[s].value !== void 0) {
+              if (a && t.buttons[s].value !== void 0 && t.buttons[s].value > 0) {
                 const r = t.buttons[s].value < this.triggerTrim ? 0 : t.buttons[s].value;
                 this.buttonActions[s].repeat.trigger(r);
               }

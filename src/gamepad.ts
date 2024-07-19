@@ -53,8 +53,8 @@ const gamepad = {
           if (gp.buttons) {
             for (let x = 0; x < this.buttons; x++) {
               if (repeat) {
-                // If the value is defined, trigger repeat
-                if (gp.buttons[x].value !== undefined) {
+                // If the value is greater than zero, trigger repeat
+                if (gp.buttons[x].value !== undefined && gp.buttons[x].value > 0) {
                   const trimmedValue = gp.buttons[x].value < this.triggerTrim ? 0.0 : gp.buttons[x].value;
                   this.buttonActions[x].repeat.trigger(trimmedValue);
                 }

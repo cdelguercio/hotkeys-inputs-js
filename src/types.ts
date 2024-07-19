@@ -168,6 +168,7 @@ export interface GamepadPrototype extends IProxyInputEventHandler {
   axes: number;
   axeValues: number[];
   axeStep: number;
+  triggerTrim: number;
   hapticActuator: any;
   vibrationMode: number;
   vibration: boolean;

@@ -38,7 +38,7 @@ const inputActions: InputActions = {
     this.handlers.keyboard.enabled = value;
   },
   unregisterActionsCallbacks: {},
-  init: function () {
+  init () {
     gameControl.on('connect', (gamepad) => {
       if (!this.handlers.gamepad.handler) {
         this.handlers.gamepad.handler = gamepad;
@@ -57,17 +57,17 @@ const inputActions: InputActions = {
         this.handlers.gamepad.handler = v;
     });
   },
-  defineInputActions: function (actions: InputHandlerDefinedAction, opts?: RegisterInputActionOptions) {
+  defineInputActions (actions: InputHandlerDefinedAction, opts?: RegisterInputActionOptions) {
     Object.entries(actions).map(([action, definitions]) => {
       if (!opts?.override && this.definedActions[action])
         throw new Error(`${action} action has already been defined as a dependency.`);
       this.definedActions[action] = definitions;
     });
   },
-  cleanInputActions: function () {
+  cleanInputActions () {
     this.definedActions = {};
   },
-  onInputActions: function (id: string, handlers: ActionHandler, unsubscribedCallback?: Function) {
+  onInputActions (id: string, handlers: ActionHandler, unsubscribedCallback?: Function) {
     const idsPendingDeletion = new Set<string>();
 
     // First, registering actions to input, and saving ids for action to be cleaned up
@@ -120,7 +120,7 @@ const inputActions: InputActions = {
       if (this.unregisterActionsCallbacks[item]) this.unregisterActionsCallbacks[item]();
     }
   },
-  offInputActions: function (id: string) {
+  offInputActions (id: string) {
     this.supportedInputHandlers.forEach((e) => {
       Object.entries(this.registeredActions[e]).forEach(([k, v]) => {
         if (id === v.id) {

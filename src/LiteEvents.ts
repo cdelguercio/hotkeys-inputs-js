@@ -8,7 +8,7 @@ export interface ILiteEvent<T> {
 }
 
 export class LiteEvent<T> implements ILiteEvent<T> {
-  private handlers: Array<LiteEventHandler<T>> = [];
+  private handlers: LiteEventHandler<T>[] = [];
 
   public on(handler: LiteEventHandler<T>): void {
     this.handlers.push(handler);

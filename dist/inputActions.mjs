@@ -1,5 +1,5 @@
 import k from "./gamecontrol.mjs";
-import "./gamepad-0ef47351.mjs";
+import "./gamepad-bf84a617.mjs";
 var C = typeof navigator < "u" ? navigator.userAgent.toLowerCase().indexOf("firefox") > 0 : !1;
 function x(e, t, r, n) {
   e.addEventListener ? e.addEventListener(t, r, n) : e.attachEvent && e.attachEvent("on".concat(t), function() {
@@ -294,7 +294,7 @@ if (typeof window < "u") {
   }, window.hotkeys = y;
 }
 const te = {
-  on: function(e, t, r = "changed") {
+  on(e, t, r = "changed") {
     r === "repeat" ? y(e, (n, i) => {
       n.preventDefault(), t(1);
     }) : y(e, {
@@ -304,7 +304,7 @@ const te = {
       i.repeat || t(y.isPressed(e) === !0 ? 1 : 0);
     });
   },
-  off: function(e, t) {
+  off(e, t) {
     y.unbind(e);
   }
 }, re = {
@@ -337,7 +337,7 @@ const te = {
     this.handlers.keyboard.enabled = e;
   },
   unregisterActionsCallbacks: {},
-  init: function() {
+  init() {
     k.on("connect", (e) => {
       this.handlers.gamepad.handler || (this.handlers.gamepad.handler = e, Object.entries(this.registeredActions.gamepad).forEach(([t, r]) => {
         var n;
@@ -349,17 +349,17 @@ const te = {
       t !== null && t.id !== this.handlers.gamepad.handler.id && (this.handlers.gamepad.handler = t);
     });
   },
-  defineInputActions: function(e, t) {
+  defineInputActions(e, t) {
     Object.entries(e).map(([r, n]) => {
       if (!(t != null && t.override) && this.definedActions[r])
         throw new Error(`${r} action has already been defined as a dependency.`);
       this.definedActions[r] = n;
     });
   },
-  cleanInputActions: function() {
+  cleanInputActions() {
     this.definedActions = {};
   },
-  onInputActions: function(e, t, r) {
+  onInputActions(e, t, r) {
     const n = /* @__PURE__ */ new Set();
     Object.entries(t).forEach(([i, a]) => {
       const f = this.definedActions[i];
@@ -397,7 +397,7 @@ const te = {
     for (const i of Array.from(n.values()))
       this.unregisterActionsCallbacks[i] && this.unregisterActionsCallbacks[i]();
   },
-  offInputActions: function(e) {
+  offInputActions(e) {
     this.supportedInputHandlers.forEach((t) => {
       Object.entries(this.registeredActions[t]).forEach(([r, n]) => {
         var i;

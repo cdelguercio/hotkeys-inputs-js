@@ -1,11 +1,11 @@
-import { IProxyEventOption, IProxyInputEventHandler } from './types';
+import { IProxyInputEventHandler } from './types';
 import hotkeys, { HotkeysEvent } from 'hotkeys-js';
 
 const keyboardProxy: IProxyInputEventHandler = {
-  on: function (eventName, callback, event = 'changed') {
+  on (eventName, callback, event = 'changed') {
     if (event === 'repeat') {
-      hotkeys(eventName as string, (event, _) => {
-        event.preventDefault();
+      hotkeys(eventName as string, (e, _) => {
+        e.preventDefault();
         callback(1);
       });
     } else {
@@ -13,12 +13,12 @@ const keyboardProxy: IProxyInputEventHandler = {
         keyup: event === 'released' || event === 'changed' ? true : null,
         keydown: event === 'pressed' || event === 'changed' ? true : null,
       };
-      hotkeys(eventName as string, hotKeysOptions, (event: KeyboardEvent, d: HotkeysEvent) => {
-        if (!event.repeat) callback(hotkeys.isPressed(eventName as string) === true ? 1 : 0);
+      hotkeys(eventName as string, hotKeysOptions, (e: KeyboardEvent, d: HotkeysEvent) => {
+        if (!e.repeat) callback(hotkeys.isPressed(eventName as string) === true ? 1 : 0);
       });
     }
   },
-  off: function (eventName, handler) {
+  off (eventName, handler) {
     hotkeys.unbind(eventName as string);
   },
 };

@@ -10,13 +10,14 @@ const makeEmptyEvents = <T>() => ({
 });
 
 const gamepad = {
-  init: function (gpad: Gamepad) {
+  init (gpad: Gamepad) {
     const gamepadPrototype: GamepadPrototype = {
       id: gpad.index,
       buttons: gpad.buttons.length,
       axes: Math.floor(gpad.axes.length),
       axeValues: [],
       axeStep: 0.15,
+      triggerTrim: 0.05, // TODO: this has only been tested for use with repeat
       hapticActuator: null,
       vibrationMode: -1,
       vibration: false,
@@ -24,21 +25,21 @@ const gamepad = {
       buttonActions: {},
       axesActions: {},
       pressed: {},
-      vibrate: function (value = 0.75, duration = 500) {
+      vibrate (value = 0.75, duration = 500) {
         if (this.hapticActuator) {
           switch (this.vibrationMode) {
             case 0:
               return this.hapticActuator.pulse(value, duration);
             case 1:
               return this.hapticActuator.playEffect('dual-rumble', {
-                duration: duration,
+                duration,
                 strongMagnitude: value,
                 weakMagnitude: value,
               });
           }
         }
       },
-      checkStatus: function () {
+      checkStatus () {
         let gp = {} as Gamepad;
         const repeat = freqTimer.tick();
         const gps = navigator.getGamepads
@@ -52,9 +53,10 @@ const gamepad = {
           if (gp.buttons) {
             for (let x = 0; x < this.buttons; x++) {
               if (repeat) {
-                // If the value is greater than zero, trigger repeat
-                if (gp.buttons[x].value !== undefined && gp.buttons[x].value > 0) {
-                  this.buttonActions[x].repeat.trigger(gp.buttons[x].value);
+                // If the value is defined, trigger repeat
+                if (gp.buttons[x].value !== undefined) {
+                  const trimmedValue = gp.buttons[x].value < this.triggerTrim ? 0.0 : gp.buttons[x].value;
+                  this.buttonActions[x].repeat.trigger(trimmedValue);
                 }
               }
               if (gp.buttons[x].pressed) {
@@ -116,7 +118,7 @@ const gamepad = {
           }
         }
       },
-      on: function (eventName: number | string, callback: (value?: number) => void, eventType = 'changed') {
+      on (eventName: number | string, callback: (value?: number) => void, eventType = 'changed') {
         if (eventName < 0) {
           // If subscribing to a joystick event
           const jIndex = Math.floor((Math.abs(eventName as number) - 1) / 2);
@@ -128,7 +130,7 @@ const gamepad = {
         }
         return this;
       },
-      off: function (eventName: number | string) {
+      off (eventName: number | string) {
         if (eventName < 0) {
           // If unsubscribing to a joystick event
           const jIndex = Math.floor((Math.abs(eventName as number) - 1) / 2);

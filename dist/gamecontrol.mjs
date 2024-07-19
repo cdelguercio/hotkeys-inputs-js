@@ -1,5 +1,5 @@
-import { L as o, g as i } from "./gamepad-0ef47351.mjs";
-const a = {
+import { L as o, g as s } from "./gamepad-bf84a617.mjs";
+const t = {
   gamepads: {},
   axeThreshold: [1],
   isReady: () => navigator.getGamepads && typeof navigator.getGamepads == "function" || navigator.getGamepads && typeof navigator.webkitGetGamepads == "function" || !1,
@@ -7,27 +7,27 @@ const a = {
   onDisconnect: new o(),
   onBeforeCycle: new o(),
   onAfterCycle: new o(),
-  getGamepads: function() {
+  getGamepads() {
     return this.gamepads;
   },
-  getGamepad: function(n) {
+  getGamepad(n) {
     return this.gamepads[n] ? this.gamepads[n] : null;
   },
   checkStatus: () => {
-    const n = window.requestAnimationFrame || window.webkitRequestAnimationFrame, e = Object.keys(a.gamepads);
-    a.onBeforeCycle.trigger();
-    for (let t = 0; t < e.length; t++)
-      a.gamepads[e[t]].checkStatus();
-    a.onAfterCycle.trigger(), e.length > 0 && n(a.checkStatus);
+    const n = window.requestAnimationFrame || window.webkitRequestAnimationFrame, e = Object.keys(t.gamepads);
+    t.onBeforeCycle.trigger();
+    for (const a of e)
+      t.gamepads[a].checkStatus();
+    t.onAfterCycle.trigger(), e.length > 0 && n(t.checkStatus);
   },
-  init: function() {
+  init() {
     window.addEventListener("gamepadconnected", (n) => {
       const e = n.gamepad || n.detail.gamepad;
       if (window.gamepads || (window.gamepads = {}), e) {
         if (!window.gamepads[e.index]) {
           window.gamepads[e.index] = e;
-          const t = i.init(e);
-          this.gamepads[t.id] = t, this.onConnect.trigger(this.gamepads[t.id]);
+          const a = s.init(e);
+          this.gamepads[a.id] = a, this.onConnect.trigger(this.gamepads[a.id]);
         }
         Object.keys(this.gamepads).length === 1 && this.checkStatus();
       }
@@ -36,7 +36,7 @@ const a = {
       e && (this.onDisconnect.trigger(this.gamepads[e.index]), delete window.gamepads[e.index], delete this.gamepads[e.index]);
     });
   },
-  on: function(n, e) {
+  on(n, e) {
     switch (n) {
       case "connect":
         this.onConnect.on(e);
@@ -56,7 +56,7 @@ const a = {
     }
     return this;
   },
-  off: function(n, e) {
+  off(n, e) {
     switch (n) {
       case "connect":
         this.onConnect.off(e);
@@ -77,7 +77,7 @@ const a = {
     return this;
   }
 };
-a.init();
+t.init();
 export {
-  a as default
+  t as default
 };

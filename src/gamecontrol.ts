@@ -13,10 +13,10 @@ const gameControl: GameControl = {
   onDisconnect: new LiteEvent<GamepadPrototype>(),
   onBeforeCycle: new LiteEvent<void>(),
   onAfterCycle: new LiteEvent<void>(),
-  getGamepads: function () {
+  getGamepads () {
     return this.gamepads;
   },
-  getGamepad: function (id) {
+  getGamepad (id) {
     if (this.gamepads[id]) {
       return this.gamepads[id];
     }
@@ -28,8 +28,8 @@ const gameControl: GameControl = {
 
     gameControl.onBeforeCycle.trigger();
 
-    for (let x = 0; x < gamepadIds.length; x++) {
-      gameControl.gamepads[gamepadIds[x]].checkStatus();
+    for (const gamepadId of gamepadIds) {
+      gameControl.gamepads[gamepadId].checkStatus();
     }
 
     gameControl.onAfterCycle.trigger();
@@ -38,7 +38,7 @@ const gameControl: GameControl = {
       requestAnimationFrame(gameControl.checkStatus);
     }
   },
-  init: function () {
+  init () {
     window.addEventListener('gamepadconnected', (e) => {
       const egp = (e.gamepad || (e as any).detail.gamepad) as Gamepad;
       if (!(window as any).gamepads) (window as any).gamepads = {};
@@ -61,7 +61,7 @@ const gameControl: GameControl = {
       }
     });
   },
-  on: function (eventName: GameControlEventType, callback: GameControlEventHandler) {
+  on (eventName: GameControlEventType, callback: GameControlEventHandler) {
     switch (eventName) {
       case 'connect':
         this.onConnect.on(callback as (gamepad: GamepadPrototype) => void);
@@ -82,7 +82,7 @@ const gameControl: GameControl = {
     }
     return this;
   },
-  off: function (eventName: GameControlEventType, callback: GameControlEventHandler) {
+  off (eventName: GameControlEventType, callback: GameControlEventHandler) {
     switch (eventName) {
       case 'connect':
         this.onConnect.off(callback as (gamepad: GamepadPrototype) => void);

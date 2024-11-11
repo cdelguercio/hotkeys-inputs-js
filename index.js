@@ -22,4 +22,6 @@ module.exports.DefaultGamepad = {
   KeyOpts: 17,
   KeyPlus: 9,
   KeyMinus: 8,
+  KeyL3: 10,
+  KeyR3: 11,
 };

@@ -1,28 +1,34 @@
-import k from "./gamecontrol.mjs";
+import j from "./gamecontrol.mjs";
 import "./gamepad-074d868b.mjs";
-var C = typeof navigator < "u" ? navigator.userAgent.toLowerCase().indexOf("firefox") > 0 : !1;
-function x(e, t, r, n) {
-  e.addEventListener ? e.addEventListener(t, r, n) : e.attachEvent && e.attachEvent("on".concat(t), function() {
-    r(window.event);
-  });
+const M = typeof navigator < "u" ? navigator.userAgent.toLowerCase().indexOf("firefox") > 0 : !1;
+function P(e, t, n, s) {
+  e.addEventListener ? e.addEventListener(t, n, s) : e.attachEvent && e.attachEvent("on".concat(t), n);
 }
-function D(e, t) {
-  for (var r = t.slice(0, t.length - 1), n = 0; n < r.length; n++)
-    r[n] = e[r[n].toLowerCase()];
-  return r;
+function O(e, t, n, s) {
+  e.removeEventListener ? e.removeEventListener(t, n, s) : e.detachEvent && e.detachEvent("on".concat(t), n);
 }
-function I(e) {
+function B(e, t) {
+  const n = t.slice(0, t.length - 1);
+  for (let s = 0; s < n.length; s++)
+    n[s] = e[n[s].toLowerCase()];
+  return n;
+}
+function G(e) {
   typeof e != "string" && (e = ""), e = e.replace(/\s/g, "");
-  for (var t = e.split(","), r = t.lastIndexOf(""); r >= 0; )
-    t[r - 1] += ",", t.splice(r, 1), r = t.lastIndexOf("");
+  const t = e.split(",");
+  let n = t.lastIndexOf("");
+  for (; n >= 0; )
+    t[n - 1] += ",", t.splice(n, 1), n = t.lastIndexOf("");
   return t;
 }
-function R(e, t) {
-  for (var r = e.length >= t.length ? e : t, n = e.length >= t.length ? t : e, i = !0, a = 0; a < r.length; a++)
-    n.indexOf(r[a]) === -1 && (i = !1);
+function v(e, t) {
+  const n = e.length >= t.length ? e : t, s = e.length >= t.length ? t : e;
+  let i = !0;
+  for (let o = 0; o < n.length; o++)
+    s.indexOf(n[o]) === -1 && (i = !1);
   return i;
 }
-var K = {
+const A = {
   backspace: 8,
   "⌫": 8,
   tab: 9,
@@ -67,9 +73,9 @@ var K = {
   ".": 190,
   "/": 191,
   "`": 192,
-  "-": C ? 173 : 189,
-  "=": C ? 61 : 187,
-  ";": C ? 59 : 186,
+  "-": M ? 173 : 189,
+  "=": M ? 61 : 187,
+  ";": M ? 59 : 186,
   "'": 222,
   "[": 219,
   "]": 221,
@@ -90,7 +96,7 @@ var K = {
   "⌘": 91,
   cmd: 91,
   command: 91
-}, S = {
+}, L = {
   16: "shiftKey",
   18: "altKey",
   17: "ctrlKey",
@@ -99,219 +105,289 @@ var K = {
   ctrlKey: 17,
   altKey: 18,
   metaKey: 91
-}, l = {
+}, c = {
   16: !1,
   18: !1,
   17: !1,
   91: !1
-}, d = {};
-for (var A = 1; A < 20; A++)
-  K["f".concat(A)] = 111 + A;
-var o = [], H = !1, T = "all", $ = [], E = function(t) {
-  return K[t.toLowerCase()] || b[t.toLowerCase()] || t.toUpperCase().charCodeAt(0);
-}, V = function(t) {
-  return Object.keys(K).find(function(r) {
-    return K[r] === t;
-  });
-}, F = function(t) {
-  return Object.keys(b).find(function(r) {
-    return b[r] === t;
-  });
-};
-function G(e) {
-  T = e || "all";
+}, f = {};
+for (let e = 1; e < 20; e++)
+  A["f".concat(e)] = 111 + e;
+let a = [], K = null, R = "all";
+const k = /* @__PURE__ */ new Map(), x = (e) => A[e.toLowerCase()] || b[e.toLowerCase()] || e.toUpperCase().charCodeAt(0), z = (e) => Object.keys(A).find((t) => A[t] === e), F = (e) => Object.keys(b).find((t) => b[t] === e);
+function V(e) {
+  R = e || "all";
 }
-function O() {
-  return T || "all";
+function C() {
+  return R || "all";
 }
 function X() {
-  return o.slice(0);
+  return a.slice(0);
 }
 function q() {
-  return o.map(function(e) {
-    return V(e) || F(e) || String.fromCharCode(e);
-  });
+  return a.map((e) => z(e) || F(e) || String.fromCharCode(e));
 }
-function z(e) {
-  var t = e.target || e.srcElement, r = t.tagName, n = !0;
-  return (t.isContentEditable || (r === "INPUT" || r === "TEXTAREA" || r === "SELECT") && !t.readOnly) && (n = !1), n;
+function J() {
+  const e = [];
+  return Object.keys(f).forEach((t) => {
+    f[t].forEach((n) => {
+      let {
+        key: s,
+        scope: i,
+        mods: o,
+        shortcut: l
+      } = n;
+      e.push({
+        scope: i,
+        shortcut: l,
+        mods: o,
+        keys: s.split("+").map((r) => x(r))
+      });
+    });
+  }), e;
 }
-function J(e) {
-  return typeof e == "string" && (e = E(e)), o.indexOf(e) !== -1;
-}
-function Q(e, t) {
-  var r, n;
-  e || (e = O());
-  for (var i in d)
-    if (Object.prototype.hasOwnProperty.call(d, i))
-      for (r = d[i], n = 0; n < r.length; )
-        r[n].scope === e ? r.splice(n, 1) : n++;
-  O() === e && G(t || "all");
+function Q(e) {
+  const t = e.target || e.srcElement, {
+    tagName: n
+  } = t;
+  let s = !0;
+  const i = n === "INPUT" && !["checkbox", "radio", "range", "button", "file", "reset", "submit", "color"].includes(t.type);
+  return (t.isContentEditable || (i || n === "TEXTAREA" || n === "SELECT") && !t.readOnly) && (s = !1), s;
 }
 function W(e) {
-  var t = e.keyCode || e.which || e.charCode, r = o.indexOf(t);
-  if (r >= 0 && o.splice(r, 1), e.key && e.key.toLowerCase() === "meta" && o.splice(0, o.length), (t === 93 || t === 224) && (t = 91), t in l) {
-    l[t] = !1;
-    for (var n in b)
-      b[n] === t && (y[n] = !1);
+  return typeof e == "string" && (e = x(e)), a.indexOf(e) !== -1;
+}
+function Y(e, t) {
+  let n, s;
+  e || (e = C());
+  for (const i in f)
+    if (Object.prototype.hasOwnProperty.call(f, i))
+      for (n = f[i], s = 0; s < n.length; )
+        n[s].scope === e ? n.splice(s, 1).forEach((l) => {
+          let {
+            element: r
+          } = l;
+          return I(r);
+        }) : s++;
+  C() === e && V(t || "all");
+}
+function Z(e) {
+  let t = e.keyCode || e.which || e.charCode;
+  const n = a.indexOf(t);
+  if (n >= 0 && a.splice(n, 1), e.key && e.key.toLowerCase() === "meta" && a.splice(0, a.length), (t === 93 || t === 224) && (t = 91), t in c) {
+    c[t] = !1;
+    for (const s in b)
+      b[s] === t && (m[s] = !1);
   }
 }
-function Y(e) {
+function $(e) {
   if (typeof e > "u")
-    Object.keys(d).forEach(function(f) {
-      return delete d[f];
-    });
+    Object.keys(f).forEach((i) => {
+      Array.isArray(f[i]) && f[i].forEach((o) => _(o)), delete f[i];
+    }), I(null);
   else if (Array.isArray(e))
-    e.forEach(function(f) {
-      f.key && j(f);
+    e.forEach((i) => {
+      i.key && _(i);
     });
   else if (typeof e == "object")
-    e.key && j(e);
+    e.key && _(e);
   else if (typeof e == "string") {
-    for (var t = arguments.length, r = new Array(t > 1 ? t - 1 : 0), n = 1; n < t; n++)
-      r[n - 1] = arguments[n];
-    var i = r[0], a = r[1];
-    typeof i == "function" && (a = i, i = ""), j({
+    for (var t = arguments.length, n = new Array(t > 1 ? t - 1 : 0), s = 1; s < t; s++)
+      n[s - 1] = arguments[s];
+    let [i, o] = n;
+    typeof i == "function" && (o = i, i = ""), _({
       key: e,
       scope: i,
-      method: a,
+      method: o,
       splitKey: "+"
     });
   }
 }
-var j = function(t) {
-  var r = t.key, n = t.scope, i = t.method, a = t.splitKey, f = a === void 0 ? "+" : a, s = I(r);
-  s.forEach(function(u) {
-    var p = u.split(f), m = p.length, g = p[m - 1], c = g === "*" ? "*" : E(g);
-    if (d[c]) {
-      n || (n = O());
-      var w = m > 1 ? D(b, p) : [];
-      d[c] = d[c].filter(function(h) {
-        var v = i ? h.method === i : !0;
-        return !(v && h.scope === n && R(h.mods, w));
-      });
-    }
+const _ = (e) => {
+  let {
+    key: t,
+    scope: n,
+    method: s,
+    splitKey: i = "+"
+  } = e;
+  G(t).forEach((l) => {
+    const r = l.split(i), d = r.length, p = r[d - 1], y = p === "*" ? "*" : x(p);
+    if (!f[y])
+      return;
+    n || (n = C());
+    const h = d > 1 ? B(b, r) : [], g = [];
+    f[y] = f[y].filter((u) => {
+      const w = (s ? u.method === s : !0) && u.scope === n && v(u.mods, h);
+      return w && g.push(u.element), !w;
+    }), g.forEach((u) => I(u));
   });
 };
-function U(e, t, r, n) {
-  if (t.element === n) {
-    var i;
-    if (t.scope === r || t.scope === "all") {
-      i = t.mods.length > 0;
-      for (var a in l)
-        Object.prototype.hasOwnProperty.call(l, a) && (!l[a] && t.mods.indexOf(+a) > -1 || l[a] && t.mods.indexOf(+a) === -1) && (i = !1);
-      (t.mods.length === 0 && !l[16] && !l[18] && !l[17] && !l[91] || i || t.shortcut === "*") && t.method(e, t) === !1 && (e.preventDefault ? e.preventDefault() : e.returnValue = !1, e.stopPropagation && e.stopPropagation(), e.cancelBubble && (e.cancelBubble = !0));
-    }
+function H(e, t, n, s) {
+  if (t.element !== s)
+    return;
+  let i;
+  if (t.scope === n || t.scope === "all") {
+    i = t.mods.length > 0;
+    for (const o in c)
+      Object.prototype.hasOwnProperty.call(c, o) && (!c[o] && t.mods.indexOf(+o) > -1 || c[o] && t.mods.indexOf(+o) === -1) && (i = !1);
+    (t.mods.length === 0 && !c[16] && !c[18] && !c[17] && !c[91] || i || t.shortcut === "*") && (t.keys = [], t.keys = t.keys.concat(a), t.method(e, t) === !1 && (e.preventDefault ? e.preventDefault() : e.returnValue = !1, e.stopPropagation && e.stopPropagation(), e.cancelBubble && (e.cancelBubble = !0)));
   }
 }
-function B(e, t) {
-  var r = d["*"], n = e.keyCode || e.which || e.charCode;
-  if (y.filter.call(this, e)) {
-    if ((n === 93 || n === 224) && (n = 91), o.indexOf(n) === -1 && n !== 229 && o.push(n), ["ctrlKey", "altKey", "shiftKey", "metaKey"].forEach(function(h) {
-      var v = S[h];
-      e[h] && o.indexOf(v) === -1 ? o.push(v) : !e[h] && o.indexOf(v) > -1 ? o.splice(o.indexOf(v), 1) : h === "metaKey" && e[h] && o.length === 3 && (e.ctrlKey || e.shiftKey || e.altKey || (o = o.slice(o.indexOf(v))));
-    }), n in l) {
-      l[n] = !0;
-      for (var i in b)
-        b[i] === n && (y[i] = !0);
-      if (!r)
-        return;
-    }
-    for (var a in l)
-      Object.prototype.hasOwnProperty.call(l, a) && (l[a] = e[S[a]]);
-    e.getModifierState && !(e.altKey && !e.ctrlKey) && e.getModifierState("AltGraph") && (o.indexOf(17) === -1 && o.push(17), o.indexOf(18) === -1 && o.push(18), l[17] = !0, l[18] = !0);
-    var f = O();
-    if (r)
-      for (var s = 0; s < r.length; s++)
-        r[s].scope === f && (e.type === "keydown" && r[s].keydown || e.type === "keyup" && r[s].keyup) && U(e, r[s], f, t);
-    if (n in d) {
-      for (var u = 0; u < d[n].length; u++)
-        if ((e.type === "keydown" && d[n][u].keydown || e.type === "keyup" && d[n][u].keyup) && d[n][u].key) {
-          for (var p = d[n][u], m = p.splitKey, g = p.key.split(m), c = [], w = 0; w < g.length; w++)
-            c.push(E(g[w]));
-          c.sort().join("") === o.sort().join("") && U(e, p, f, t);
-        }
-    }
+function T(e, t) {
+  const n = f["*"];
+  let s = e.keyCode || e.which || e.charCode;
+  if (!m.filter.call(this, e))
+    return;
+  if ((s === 93 || s === 224) && (s = 91), a.indexOf(s) === -1 && s !== 229 && a.push(s), ["metaKey", "ctrlKey", "altKey", "shiftKey"].forEach((r) => {
+    const d = L[r];
+    e[r] && a.indexOf(d) === -1 ? a.push(d) : !e[r] && a.indexOf(d) > -1 ? a.splice(a.indexOf(d), 1) : r === "metaKey" && e[r] && (a = a.filter((p) => p in L || p === s));
+  }), s in c) {
+    c[s] = !0;
+    for (const r in b)
+      b[r] === s && (m[r] = !0);
+    if (!n)
+      return;
   }
+  for (const r in c)
+    Object.prototype.hasOwnProperty.call(c, r) && (c[r] = e[L[r]]);
+  e.getModifierState && !(e.altKey && !e.ctrlKey) && e.getModifierState("AltGraph") && (a.indexOf(17) === -1 && a.push(17), a.indexOf(18) === -1 && a.push(18), c[17] = !0, c[18] = !0);
+  const i = C();
+  if (n)
+    for (let r = 0; r < n.length; r++)
+      n[r].scope === i && (e.type === "keydown" && n[r].keydown || e.type === "keyup" && n[r].keyup) && H(e, n[r], i, t);
+  if (!(s in f))
+    return;
+  const o = f[s], l = o.length;
+  for (let r = 0; r < l; r++)
+    if ((e.type === "keydown" && o[r].keydown || e.type === "keyup" && o[r].keyup) && o[r].key) {
+      const d = o[r], {
+        splitKey: p
+      } = d, y = d.key.split(p), h = [];
+      for (let g = 0; g < y.length; g++)
+        h.push(x(y[g]));
+      h.sort().join("") === a.sort().join("") && H(e, d, i, t);
+    }
 }
-function Z(e) {
-  return $.indexOf(e) > -1;
-}
-function y(e, t, r) {
-  o = [];
-  var n = I(e), i = [], a = "all", f = document, s = 0, u = !1, p = !0, m = "+", g = !1;
-  for (r === void 0 && typeof t == "function" && (r = t), Object.prototype.toString.call(t) === "[object Object]" && (t.scope && (a = t.scope), t.element && (f = t.element), t.keyup && (u = t.keyup), t.keydown !== void 0 && (p = t.keydown), t.capture !== void 0 && (g = t.capture), typeof t.splitKey == "string" && (m = t.splitKey)), typeof t == "string" && (a = t); s < n.length; s++)
-    e = n[s].split(m), i = [], e.length > 1 && (i = D(b, e)), e = e[e.length - 1], e = e === "*" ? "*" : E(e), e in d || (d[e] = []), d[e].push({
-      keyup: u,
+function m(e, t, n) {
+  a = [];
+  const s = G(e);
+  let i = [], o = "all", l = document, r = 0, d = !1, p = !0, y = "+", h = !1, g = !1;
+  for (n === void 0 && typeof t == "function" && (n = t), Object.prototype.toString.call(t) === "[object Object]" && (t.scope && (o = t.scope), t.element && (l = t.element), t.keyup && (d = t.keyup), t.keydown !== void 0 && (p = t.keydown), t.capture !== void 0 && (h = t.capture), typeof t.splitKey == "string" && (y = t.splitKey), t.single === !0 && (g = !0)), typeof t == "string" && (o = t), g && $(e, o); r < s.length; r++)
+    e = s[r].split(y), i = [], e.length > 1 && (i = B(b, e)), e = e[e.length - 1], e = e === "*" ? "*" : x(e), e in f || (f[e] = []), f[e].push({
+      keyup: d,
       keydown: p,
-      scope: a,
+      scope: o,
       mods: i,
-      shortcut: n[s],
-      method: r,
-      key: n[s],
-      splitKey: m,
-      element: f
+      shortcut: s[r],
+      method: n,
+      key: s[r],
+      splitKey: y,
+      element: l
     });
-  typeof f < "u" && !Z(f) && window && ($.push(f), x(f, "keydown", function(c) {
-    B(c, f);
-  }, g), H || (H = !0, x(window, "focus", function() {
-    o = [];
-  }, g)), x(f, "keyup", function(c) {
-    B(c, f), W(c);
-  }, g));
+  if (typeof l < "u" && window) {
+    if (!k.has(l)) {
+      const u = function() {
+        let w = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : window.event;
+        return T(w, l);
+      }, E = function() {
+        let w = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : window.event;
+        T(w, l), Z(w);
+      };
+      k.set(l, {
+        keydownListener: u,
+        keyupListenr: E,
+        capture: h
+      }), P(l, "keydown", u, h), P(l, "keyup", E, h);
+    }
+    if (!K) {
+      const u = () => {
+        a = [];
+      };
+      K = {
+        listener: u,
+        capture: h
+      }, P(window, "focus", u, h);
+    }
+  }
 }
 function N(e) {
-  var t = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "all";
-  Object.keys(d).forEach(function(r) {
-    var n = d[r].filter(function(i) {
-      return i.scope === t && i.shortcut === e;
-    });
-    n.forEach(function(i) {
+  let t = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "all";
+  Object.keys(f).forEach((n) => {
+    f[n].filter((i) => i.scope === t && i.shortcut === e).forEach((i) => {
       i && i.method && i.method();
     });
   });
 }
-var P = {
-  getPressedKeyString: q,
-  setScope: G,
-  getScope: O,
-  deleteScope: Q,
-  getPressedKeyCodes: X,
-  isPressed: J,
-  filter: z,
-  trigger: N,
-  unbind: Y,
-  keyMap: K,
-  modifier: b,
-  modifierMap: S
-};
-for (var M in P)
-  Object.prototype.hasOwnProperty.call(P, M) && (y[M] = P[M]);
-if (typeof window < "u") {
-  var ee = window.hotkeys;
-  y.noConflict = function(e) {
-    return e && window.hotkeys === y && (window.hotkeys = ee), y;
-  }, window.hotkeys = y;
+function I(e) {
+  const t = Object.values(f).flat();
+  if (t.findIndex((s) => {
+    let {
+      element: i
+    } = s;
+    return i === e;
+  }) < 0) {
+    const {
+      keydownListener: s,
+      keyupListenr: i,
+      capture: o
+    } = k.get(e) || {};
+    s && i && (O(e, "keyup", i, o), O(e, "keydown", s, o), k.delete(e));
+  }
+  if ((t.length <= 0 || k.size <= 0) && (Object.keys(k).forEach((i) => {
+    const {
+      keydownListener: o,
+      keyupListenr: l,
+      capture: r
+    } = k.get(i) || {};
+    o && l && (O(i, "keyup", l, r), O(i, "keydown", o, r), k.delete(i));
+  }), k.clear(), Object.keys(f).forEach((i) => delete f[i]), K)) {
+    const {
+      listener: i,
+      capture: o
+    } = K;
+    O(window, "focus", i, o), K = null;
+  }
 }
-const te = {
-  on(e, t, r = "changed") {
-    r === "repeat" ? y(e, (n, i) => {
-      n.preventDefault(), t(1);
-    }) : y(e, {
-      keyup: r === "released" || r === "changed" ? !0 : null,
-      keydown: r === "pressed" || r === "changed" ? !0 : null
-    }, (i, a) => {
-      i.repeat || t(y.isPressed(e) === !0 ? 1 : 0);
+const S = {
+  getPressedKeyString: q,
+  setScope: V,
+  getScope: C,
+  deleteScope: Y,
+  getPressedKeyCodes: X,
+  getAllKeyCodes: J,
+  isPressed: W,
+  filter: Q,
+  trigger: N,
+  unbind: $,
+  keyMap: A,
+  modifier: b,
+  modifierMap: L
+};
+for (const e in S)
+  Object.prototype.hasOwnProperty.call(S, e) && (m[e] = S[e]);
+if (typeof window < "u") {
+  const e = window.hotkeys;
+  m.noConflict = (t) => (t && window.hotkeys === m && (window.hotkeys = e), m), window.hotkeys = m;
+}
+const ee = {
+  on(e, t, n = "changed") {
+    n === "repeat" ? m(e, (s, i) => {
+      s.preventDefault(), t(1);
+    }) : m(e, {
+      keyup: n === "released" || n === "changed" ? !0 : null,
+      keydown: n === "pressed" || n === "changed" ? !0 : null
+    }, (i, o) => {
+      i.repeat || t(m.isPressed(e) === !0 ? 1 : 0);
     });
   },
   off(e, t) {
-    y.unbind(e);
+    m.unbind(e);
   }
-}, re = {
+}, te = {
   supportedInputHandlers: ["keyboard", "gamepad"],
   handlers: {
     keyboard: {
-      handler: te,
+      handler: ee,
       enabled: !0
     },
     gamepad: {
@@ -338,75 +414,75 @@ const te = {
   },
   unregisterActionsCallbacks: {},
   init() {
-    k.on("connect", (e) => {
-      this.handlers.gamepad.handler || (this.handlers.gamepad.handler = e, Object.entries(this.registeredActions.gamepad).forEach(([t, r]) => {
-        var n;
-        (n = this.handlers.gamepad.handler) == null || n.on(t, r.handler, r.event);
+    j.on("connect", (e) => {
+      this.handlers.gamepad.handler || (this.handlers.gamepad.handler = e, Object.entries(this.registeredActions.gamepad).forEach(([t, n]) => {
+        var s;
+        (s = this.handlers.gamepad.handler) == null || s.on(t, n.handler, n.event);
       }));
-    }), k.on("disconnect", (e) => {
+    }), j.on("disconnect", (e) => {
       e.id === this.handlers.gamepad.handler.id && (this.handlers.gamepad.handler = void 0);
-    }), Object.entries(k.getGamepads()).find(([e, t]) => {
+    }), Object.entries(j.getGamepads()).find(([e, t]) => {
       t !== null && t.id !== this.handlers.gamepad.handler.id && (this.handlers.gamepad.handler = t);
     });
   },
   defineInputActions(e, t) {
-    Object.entries(e).map(([r, n]) => {
-      if (!(t != null && t.override) && this.definedActions[r])
-        throw new Error(`${r} action has already been defined as a dependency.`);
-      this.definedActions[r] = n;
+    Object.entries(e).map(([n, s]) => {
+      if (!(t != null && t.override) && this.definedActions[n])
+        throw new Error(`${n} action has already been defined as a dependency.`);
+      this.definedActions[n] = s;
     });
   },
   cleanInputActions() {
     this.definedActions = {};
   },
-  onInputActions(e, t, r) {
-    const n = /* @__PURE__ */ new Set();
-    Object.entries(t).forEach(([i, a]) => {
-      const f = this.definedActions[i];
-      f == null || f.forEach((s) => {
-        var m, g, c, w;
-        const u = this.registeredActions[s.type][s.key];
-        if (u) {
-          if (u.id === e)
+  onInputActions(e, t, n) {
+    const s = /* @__PURE__ */ new Set();
+    Object.entries(t).forEach(([i, o]) => {
+      const l = this.definedActions[i];
+      l == null || l.forEach((r) => {
+        var y, h, g, u;
+        const d = this.registeredActions[r.type][r.key];
+        if (d) {
+          if (d.id === e)
             throw new Error(`There is already a group of event registered under the id [${e}]. Unsubscribe this group of event before registering a new one`);
-          n.add(u.id), (m = this.handlers[s.type].handler) == null || m.off(s.key, u.handler);
+          s.add(d.id), (y = this.handlers[r.type].handler) == null || y.off(r.key, d.handler);
         }
-        const p = (h) => {
-          var _, L;
-          if (!this.handlers[s.type].enabled)
+        const p = (E) => {
+          var U, D;
+          if (!this.handlers[r.type].enabled)
             return;
-          if (!h) {
-            a(0);
+          if (!E) {
+            o(0);
             return;
           }
-          const v = h === 1 ? ((_ = s.options) == null ? void 0 : _.value) ?? 1 : h === 0 ? 0 : (((L = s.options) == null ? void 0 : L.value) ?? 1) * h;
-          a(v);
+          const w = E === 1 ? ((U = r.options) == null ? void 0 : U.value) ?? 1 : E === 0 ? 0 : (((D = r.options) == null ? void 0 : D.value) ?? 1) * E;
+          o(w);
         };
-        this.registeredActions[s.type][s.key] = {
+        this.registeredActions[r.type][r.key] = {
           handler: p,
           id: e,
-          event: (g = s.options) == null ? void 0 : g.event
-        }, (w = this.handlers[s.type].handler) == null || w.on(s.key, p, (c = s.options) == null ? void 0 : c.event);
+          event: (h = r.options) == null ? void 0 : h.event
+        }, (u = this.handlers[r.type].handler) == null || u.on(r.key, p, (g = r.options) == null ? void 0 : g.event);
       });
-    }), r && (this.unregisterActionsCallbacks[e] = r), this.supportedInputHandlers.forEach((i) => {
-      Object.entries(this.registeredActions[i]).forEach(([a, f]) => {
-        var s;
-        n.has(f.id) && ((s = this.handlers[i].handler) == null || s.off(a, f.handler), delete this.registeredActions[i][a]);
+    }), n && (this.unregisterActionsCallbacks[e] = n), this.supportedInputHandlers.forEach((i) => {
+      Object.entries(this.registeredActions[i]).forEach(([o, l]) => {
+        var r;
+        s.has(l.id) && ((r = this.handlers[i].handler) == null || r.off(o, l.handler), delete this.registeredActions[i][o]);
       });
     });
-    for (const i of Array.from(n.values()))
+    for (const i of Array.from(s.values()))
       this.unregisterActionsCallbacks[i] && this.unregisterActionsCallbacks[i]();
   },
   offInputActions(e) {
     this.supportedInputHandlers.forEach((t) => {
-      Object.entries(this.registeredActions[t]).forEach(([r, n]) => {
+      Object.entries(this.registeredActions[t]).forEach(([n, s]) => {
         var i;
-        e === n.id && ((i = this.handlers[t].handler) == null || i.off(r), delete this.registeredActions[t][r]);
+        e === s.id && ((i = this.handlers[t].handler) == null || i.off(n), delete this.registeredActions[t][n]);
       });
     }), this.unregisterActionsCallbacks[e] && this.unregisterActionsCallbacks[e]();
   }
 };
-re.init();
+te.init();
 export {
-  re as default
+  te as default
 };

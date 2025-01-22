@@ -151,6 +151,7 @@ export enum DefaultGamepad {
   KeyMinus = 8,
   KeyL3 = 10,
   KeyR3 = 11,
+  KeyHome = 18,
 }
 
 export interface AxesActions {

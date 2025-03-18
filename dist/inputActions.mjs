@@ -124,10 +124,10 @@ function C() {
 function q() {
   return a.slice(0);
 }
-function J() {
+function v() {
   return a.map((e) => F(e) || X(e) || String.fromCharCode(e));
 }
-function Q() {
+function J() {
   const e = [];
   return Object.keys(f).forEach((t) => {
     f[t].forEach((n) => {
@@ -146,7 +146,7 @@ function Q() {
     });
   }), e;
 }
-function W(e) {
+function Q(e) {
   const t = e.target || e.srcElement, {
     tagName: n
   } = t;
@@ -154,10 +154,10 @@ function W(e) {
   const i = n === "INPUT" && !["checkbox", "radio", "range", "button", "file", "reset", "submit", "color"].includes(t.type);
   return (t.isContentEditable || (i || n === "TEXTAREA" || n === "SELECT") && !t.readOnly) && (s = !1), s;
 }
-function Y(e) {
+function W(e) {
   return typeof e == "string" && (e = x(e)), a.indexOf(e) !== -1;
 }
-function Z(e, t) {
+function Y(e, t) {
   let n, s;
   e || (e = C());
   for (const i in f)
@@ -171,7 +171,7 @@ function Z(e, t) {
         }) : s++;
   C() === e && V(t || "all");
 }
-function v(e) {
+function Z(e) {
   let t = e.keyCode || e.which || e.charCode;
   const n = a.indexOf(t);
   if (n >= 0 && a.splice(n, 1), e.key && e.key.toLowerCase() === "meta" && a.splice(0, a.length), (t === 93 || t === 224) && (t = 91), t in c) {
@@ -291,7 +291,7 @@ function m(e, t, n) {
         return T(b, l);
       }, E = function() {
         let b = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : window.event;
-        T(b, l), v(b);
+        T(b, l), Z(b);
       };
       k.set(l, {
         keydownListener: u,
@@ -349,14 +349,14 @@ function I(e) {
   }
 }
 const S = {
-  getPressedKeyString: J,
+  getPressedKeyString: v,
   setScope: V,
   getScope: C,
-  deleteScope: Z,
+  deleteScope: Y,
   getPressedKeyCodes: q,
-  getAllKeyCodes: Q,
-  isPressed: Y,
-  filter: W,
+  getAllKeyCodes: J,
+  isPressed: W,
+  filter: Q,
   trigger: N,
   unbind: $,
   keyMap: A,
@@ -371,13 +371,13 @@ if (typeof window < "u") {
 }
 const ee = {
   on(e, t, n = "changed") {
-    console.log("test"), n === "repeat" ? (console.log("repeat"), m(e, (s, i) => {
+    n === "repeat" ? m(e, (s, i) => {
       s.preventDefault(), t(1);
-    })) : m(e, {
+    }) : m(e, {
       keyup: n === "released" || n === "changed" ? !0 : null,
       keydown: n === "pressed" || n === "changed" ? !0 : null
     }, (i, o) => {
-      i.repeat || (console.log(i), console.log(n), i.type === "keyup" && n === "changed" ? t(0) : t(m.isPressed(e) === !0 ? 1 : 0));
+      i.repeat || (i.type === "keyup" && n === "changed" ? t(0) : t(m.isPressed(e) === !0 ? 1 : 0));
     });
   },
   off(e, t) {

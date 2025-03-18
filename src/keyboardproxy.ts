@@ -14,7 +14,13 @@ const keyboardProxy: IProxyInputEventHandler = {
         keydown: event === 'pressed' || event === 'changed' ? true : null,
       };
       hotkeys(eventName as string, hotKeysOptions, (e: KeyboardEvent, d: HotkeysEvent) => {
-        if (!e.repeat) callback(hotkeys.isPressed(eventName as string) === true ? 1 : 0);
+        if (!e.repeat) {
+          if (e.type === 'keyup' && (event === 'changed')) {
+            callback(0);
+          } else {
+            callback(hotkeys.isPressed(eventName as string) === true ? 1 : 0);
+          }
+        }
       });
     }
   },

@@ -21,7 +21,7 @@ function G(e) {
     t[n - 1] += ",", t.splice(n, 1), n = t.lastIndexOf("");
   return t;
 }
-function v(e, t) {
+function z(e, t) {
   const n = e.length >= t.length ? e : t, s = e.length >= t.length ? t : e;
   let i = !0;
   for (let o = 0; o < n.length; o++)
@@ -80,7 +80,7 @@ const A = {
   "[": 219,
   "]": 221,
   "\\": 220
-}, b = {
+}, w = {
   // shiftKey
   "⇧": 16,
   shift: 16,
@@ -114,20 +114,20 @@ const A = {
 for (let e = 1; e < 20; e++)
   A["f".concat(e)] = 111 + e;
 let a = [], K = null, R = "all";
-const k = /* @__PURE__ */ new Map(), x = (e) => A[e.toLowerCase()] || b[e.toLowerCase()] || e.toUpperCase().charCodeAt(0), z = (e) => Object.keys(A).find((t) => A[t] === e), F = (e) => Object.keys(b).find((t) => b[t] === e);
+const k = /* @__PURE__ */ new Map(), x = (e) => A[e.toLowerCase()] || w[e.toLowerCase()] || e.toUpperCase().charCodeAt(0), F = (e) => Object.keys(A).find((t) => A[t] === e), X = (e) => Object.keys(w).find((t) => w[t] === e);
 function V(e) {
   R = e || "all";
 }
 function C() {
   return R || "all";
 }
-function X() {
+function q() {
   return a.slice(0);
 }
-function q() {
-  return a.map((e) => z(e) || F(e) || String.fromCharCode(e));
-}
 function J() {
+  return a.map((e) => F(e) || X(e) || String.fromCharCode(e));
+}
+function Q() {
   const e = [];
   return Object.keys(f).forEach((t) => {
     f[t].forEach((n) => {
@@ -146,7 +146,7 @@ function J() {
     });
   }), e;
 }
-function Q(e) {
+function W(e) {
   const t = e.target || e.srcElement, {
     tagName: n
   } = t;
@@ -154,10 +154,10 @@ function Q(e) {
   const i = n === "INPUT" && !["checkbox", "radio", "range", "button", "file", "reset", "submit", "color"].includes(t.type);
   return (t.isContentEditable || (i || n === "TEXTAREA" || n === "SELECT") && !t.readOnly) && (s = !1), s;
 }
-function W(e) {
+function Y(e) {
   return typeof e == "string" && (e = x(e)), a.indexOf(e) !== -1;
 }
-function Y(e, t) {
+function Z(e, t) {
   let n, s;
   e || (e = C());
   for (const i in f)
@@ -171,13 +171,13 @@ function Y(e, t) {
         }) : s++;
   C() === e && V(t || "all");
 }
-function Z(e) {
+function v(e) {
   let t = e.keyCode || e.which || e.charCode;
   const n = a.indexOf(t);
   if (n >= 0 && a.splice(n, 1), e.key && e.key.toLowerCase() === "meta" && a.splice(0, a.length), (t === 93 || t === 224) && (t = 91), t in c) {
     c[t] = !1;
-    for (const s in b)
-      b[s] === t && (m[s] = !1);
+    for (const s in w)
+      w[s] === t && (m[s] = !1);
   }
 }
 function $(e) {
@@ -215,10 +215,10 @@ const _ = (e) => {
     if (!f[y])
       return;
     n || (n = C());
-    const h = d > 1 ? B(b, r) : [], g = [];
+    const h = d > 1 ? B(w, r) : [], g = [];
     f[y] = f[y].filter((u) => {
-      const w = (s ? u.method === s : !0) && u.scope === n && v(u.mods, h);
-      return w && g.push(u.element), !w;
+      const b = (s ? u.method === s : !0) && u.scope === n && z(u.mods, h);
+      return b && g.push(u.element), !b;
     }), g.forEach((u) => I(u));
   });
 };
@@ -243,8 +243,8 @@ function T(e, t) {
     e[r] && a.indexOf(d) === -1 ? a.push(d) : !e[r] && a.indexOf(d) > -1 ? a.splice(a.indexOf(d), 1) : r === "metaKey" && e[r] && (a = a.filter((p) => p in L || p === s));
   }), s in c) {
     c[s] = !0;
-    for (const r in b)
-      b[r] === s && (m[r] = !0);
+    for (const r in w)
+      w[r] === s && (m[r] = !0);
     if (!n)
       return;
   }
@@ -273,7 +273,7 @@ function m(e, t, n) {
   const s = G(e);
   let i = [], o = "all", l = document, r = 0, d = !1, p = !0, y = "+", h = !1, g = !1;
   for (n === void 0 && typeof t == "function" && (n = t), Object.prototype.toString.call(t) === "[object Object]" && (t.scope && (o = t.scope), t.element && (l = t.element), t.keyup && (d = t.keyup), t.keydown !== void 0 && (p = t.keydown), t.capture !== void 0 && (h = t.capture), typeof t.splitKey == "string" && (y = t.splitKey), t.single === !0 && (g = !0)), typeof t == "string" && (o = t), g && $(e, o); r < s.length; r++)
-    e = s[r].split(y), i = [], e.length > 1 && (i = B(b, e)), e = e[e.length - 1], e = e === "*" ? "*" : x(e), e in f || (f[e] = []), f[e].push({
+    e = s[r].split(y), i = [], e.length > 1 && (i = B(w, e)), e = e[e.length - 1], e = e === "*" ? "*" : x(e), e in f || (f[e] = []), f[e].push({
       keyup: d,
       keydown: p,
       scope: o,
@@ -287,11 +287,11 @@ function m(e, t, n) {
   if (typeof l < "u" && window) {
     if (!k.has(l)) {
       const u = function() {
-        let w = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : window.event;
-        return T(w, l);
+        let b = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : window.event;
+        return T(b, l);
       }, E = function() {
-        let w = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : window.event;
-        T(w, l), Z(w);
+        let b = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : window.event;
+        T(b, l), v(b);
       };
       k.set(l, {
         keydownListener: u,
@@ -349,18 +349,18 @@ function I(e) {
   }
 }
 const S = {
-  getPressedKeyString: q,
+  getPressedKeyString: J,
   setScope: V,
   getScope: C,
-  deleteScope: Y,
-  getPressedKeyCodes: X,
-  getAllKeyCodes: J,
-  isPressed: W,
-  filter: Q,
+  deleteScope: Z,
+  getPressedKeyCodes: q,
+  getAllKeyCodes: Q,
+  isPressed: Y,
+  filter: W,
   trigger: N,
   unbind: $,
   keyMap: A,
-  modifier: b,
+  modifier: w,
   modifierMap: L
 };
 for (const e in S)
@@ -371,13 +371,13 @@ if (typeof window < "u") {
 }
 const ee = {
   on(e, t, n = "changed") {
-    n === "repeat" ? m(e, (s, i) => {
+    console.log("test"), n === "repeat" ? (console.log("repeat"), m(e, (s, i) => {
       s.preventDefault(), t(1);
-    }) : m(e, {
+    })) : m(e, {
       keyup: n === "released" || n === "changed" ? !0 : null,
       keydown: n === "pressed" || n === "changed" ? !0 : null
     }, (i, o) => {
-      i.repeat || t(m.isPressed(e) === !0 ? 1 : 0);
+      i.repeat || (console.log(i), console.log(n), i.type === "keyup" && n === "changed" ? t(0) : t(m.isPressed(e) === !0 ? 1 : 0));
     });
   },
   off(e, t) {
@@ -455,8 +455,8 @@ const ee = {
             o(0);
             return;
           }
-          const w = E === 1 ? ((U = r.options) == null ? void 0 : U.value) ?? 1 : E === 0 ? 0 : (((D = r.options) == null ? void 0 : D.value) ?? 1) * E;
-          o(w);
+          const b = E === 1 ? ((U = r.options) == null ? void 0 : U.value) ?? 1 : E === 0 ? 0 : (((D = r.options) == null ? void 0 : D.value) ?? 1) * E;
+          o(b);
         };
         this.registeredActions[r.type][r.key] = {
           handler: p,

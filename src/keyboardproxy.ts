@@ -3,7 +3,11 @@ import hotkeys, { HotkeysEvent } from 'hotkeys-js';
 
 const keyboardProxy: IProxyInputEventHandler = {
   on (eventName, callback, event = 'changed') {
+    // tslint:disable-next-line:no-console
+    console.log("test");
     if (event === 'repeat') {
+      // tslint:disable-next-line:no-console
+      console.log("repeat");
       hotkeys(eventName as string, (e, _) => {
         e.preventDefault();
         callback(1);

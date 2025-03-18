@@ -15,6 +15,10 @@ const keyboardProxy: IProxyInputEventHandler = {
       };
       hotkeys(eventName as string, hotKeysOptions, (e: KeyboardEvent, d: HotkeysEvent) => {
         if (!e.repeat) {
+          // tslint:disable-next-line:no-console
+          console.log(e);
+          // tslint:disable-next-line:no-console
+          console.log(event);
           if (e.type === 'keyup' && (event === 'changed')) {
             callback(0);
           } else {

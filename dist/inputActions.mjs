@@ -1,5 +1,5 @@
 import j from "./gamecontrol.mjs";
-import "./gamepad-074d868b.mjs";
+import "./gamepad-046d4eec.mjs";
 const M = typeof navigator < "u" ? navigator.userAgent.toLowerCase().indexOf("firefox") > 0 : !1;
 function P(e, t, n, s) {
   e.addEventListener ? e.addEventListener(t, n, s) : e.attachEvent && e.attachEvent("on".concat(t), n);

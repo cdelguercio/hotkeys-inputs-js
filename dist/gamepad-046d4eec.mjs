@@ -38,7 +38,7 @@ const p = {
       axes: Math.floor(i.axes.length),
       axeValues: [],
       axeStep: 0.15,
-      triggerTrim: 0.05,
+      triggerTrim: 0.1,
       hapticActuator: null,
       vibrationMode: -1,
       vibration: !1,

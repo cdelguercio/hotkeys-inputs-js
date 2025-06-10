@@ -17,7 +17,7 @@ const gamepad = {
       axes: Math.floor(gpad.axes.length),
       axeValues: [],
       axeStep: 0.15,
-      triggerTrim: 0.05, // TODO: this has only been tested for use with repeat
+      triggerTrim: 0.1, // TODO: this has only been tested for use with repeat
       hapticActuator: null,
       vibrationMode: -1,
       vibration: false,
